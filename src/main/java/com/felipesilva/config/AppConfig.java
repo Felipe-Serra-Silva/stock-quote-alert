@@ -12,17 +12,20 @@ public class AppConfig {
     private String smtpPassword;
     private String apiKey;
 
-    public AppConfig(String configPath) throws  IOException{
+    public AppConfig(String configPath) throws IOException {
         Properties props = new Properties();
-
-        props.load(new FileInputStream(configPath));
-
+        try (var input = AppConfig.class.getClassLoader().getResourceAsStream(configPath)) {
+            if (input == null) {
+                throw new IOException("Arquivo de configuração não encontrado: " + configPath);
+            }
+            props.load(input);
+        }
+        this.apiKey = props.getProperty("api.key");
         this.recipient = props.getProperty("email.recipient");
         this.smtpHost = props.getProperty("smtp.host");
         this.smtpPort = Integer.parseInt(props.getProperty("smtp.port"));
         this.smtpUser = props.getProperty("smtp.user");
         this.smtpPassword = props.getProperty("smtp.password");
-        this.apiKey = props.getProperty("api.key");
     }
 
     public String getRecipient() { return recipient; }
