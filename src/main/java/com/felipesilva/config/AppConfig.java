@@ -10,6 +10,7 @@ public class AppConfig {
     private int smtpPort;
     private String smtpUser;
     private String smtpPassword;
+    private String apiKey;
 
     public AppConfig(String configPath) throws  IOException{
         Properties props = new Properties();
@@ -21,6 +22,7 @@ public class AppConfig {
         this.smtpPort = Integer.parseInt(props.getProperty("smtp.port"));
         this.smtpUser = props.getProperty("smtp.user");
         this.smtpPassword = props.getProperty("smtp.password");
+        this.apiKey = props.getProperty("api.key");
     }
 
     public String getRecipient() { return recipient; }
@@ -28,4 +30,5 @@ public class AppConfig {
     public int getSmtpPort() { return smtpPort; }
     public String getSmtpUser() { return smtpUser; }
     public String getSmtpPassword() { return smtpPassword; }
+    public String getApiKey() { return apiKey; }
 }
